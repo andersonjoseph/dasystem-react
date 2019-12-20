@@ -1,22 +1,14 @@
-.App {
-  text-align: center;
+.post {
+  background-size: cover !important;
+  background-position: center !important;
 }
 
-.App-logo {
-  height: 40vmin;
+.post-tag {
+  margin: 3px !important;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.title{
   color: white;
-}
-
-.App-link {
-  color: #09d3ac;
+  font-family: monospace;
+  text-transform: uppercase;
+  text-decoration: underline;
 }
