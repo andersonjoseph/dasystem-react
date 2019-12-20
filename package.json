@@ -1,6 +1,6 @@
 {
   "name": "engine-curated",
-  "homepage": "http://localhost/engine-curated/wp-content/themes/dasystembar/build",
+  "homepage": "http://dasystembar.000webhostapp.com/wp-content/themes/dasystembar/build",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
