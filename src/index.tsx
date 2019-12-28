@@ -4,6 +4,8 @@ import axios from 'axios';
 import { setupCache } from 'axios-cache-adapter';
 import App from './App';
 
+import * as serviceWorker from './serviceWorker';
+
 import { IAppHandler } from './types';
 import { HOST } from './config';
 
@@ -158,3 +160,5 @@ ReactDOM.render(
   />,
   document.getElementById('root')
 );
+
+serviceWorker.register();
