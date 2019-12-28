@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Row, Col, Affix, BackTop, Spin, Card } from 'antd';
+import { Layout, Row, Col, Affix, BackTop, Spin, Card, message } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import './App.css';
@@ -74,25 +74,58 @@ class App extends React.Component<IAppProps> {
       });
   }
 
+  showError(msg: string) {
+    message.error(msg);
+  }
+
   async handleLogin(email: string, password: string) {
 
-    const user = await this.props.handler.loginHandler(email, password);
+    let user;
+    try {
+      user = await this.props.handler.loginHandler(email, password);
+      // statements
+    } catch(err) {
+      if(!err.status) {
+        this.showError('Network Error');
+      }
+      return;
+    }
 
     window.sessionStorage.setItem('email', user.email);
     window.sessionStorage.setItem('token', user.token);
   }
 
   async handleSignin(email: string, password: string) {
-    await this.props.handler.signinHandler(email, password);
+    try {
+      await this.props.handler.signinHandler(email, password);
+    } catch(err) {
+      if(!err.status) {
+        this.showError('Network Error');
+      }
+    }
   }
 
   async handleSubmitPost(link: string) {
-    await this.props.handler.submitPostHandler(link);
+    try {
+      await this.props.handler.submitPostHandler(link);
+    } catch(err) {
+      if(!err.status) {
+        this.showError('Network Error');
+      }
+    }
   }
 
   async handleFilterPosts(filter: string) {
     this.setState({loadingPosts: true});
-    const posts = await this.props.handler.getPostsFilteredByHandler(filter);
+    let posts: any[];
+    try {
+      posts = await this.props.handler.getPostsFilteredByHandler(filter);
+    } catch(err) {
+      posts = [];
+      if(!err.status) {
+        this.showError('Network Error');
+      }
+    }
 
     this.setState({
       posts: posts,
@@ -102,7 +135,16 @@ class App extends React.Component<IAppProps> {
 
   async handlePostsByTags(tags: string[]) {
     this.setState({loadingPosts: true});
-    const posts = await this.props.handler.getPostsByTagsHandler(tags);
+
+    let posts: any[];
+    try {
+      posts = await this.props.handler.getPostsByTagsHandler(tags);
+    } catch(err) {
+      posts = [];
+      if(!err.status) {
+        this.showError('Network Error');
+      }
+    }
 
     this.setState({
       posts: posts,
@@ -113,7 +155,16 @@ class App extends React.Component<IAppProps> {
 
   async handleLatestPosts() {
     this.setState({loadingPosts: true});
-    const posts = await this.props.handler.getLatestPostsHandler();
+
+    let posts: any[];
+    try {
+      posts = await this.props.handler.getLatestPostsHandler();
+    } catch(err) {
+      posts = [];
+      if(!err.status) {
+        this.showError('Network Error');
+      }
+    }
 
     this.setState({
       posts: posts,
@@ -123,7 +174,16 @@ class App extends React.Component<IAppProps> {
 
   async handleFavPosts() {
     this.setState({loadingPosts: true});
-    const posts = await this.props.handler.getFavPostsHandler();
+
+    let posts: any[];
+    try {
+      posts = await this.props.handler.getFavPostsHandler();
+    } catch(err) {
+      posts = [];
+      if(!err.status) {
+        this.showError('Network Error');
+      }
+    }
 
     this.setState({
       posts: posts,
@@ -133,7 +193,16 @@ class App extends React.Component<IAppProps> {
 
   async handleSearchPosts(query: string) {
     this.setState({loadingPosts: true});
-    const posts = await this.props.handler.searchPostsHandler(query);
+    let posts: any;
+
+    try {
+      posts = await this.props.handler.searchPostsHandler(query);
+    } catch(err) {
+      posts = [];
+      if(!err.status) {
+        this.showError('Network Error');
+      }
+    }
 
     this.setState({
       posts: posts,
@@ -143,7 +212,6 @@ class App extends React.Component<IAppProps> {
   }
 
   async handleNextPage(page: number) {
-
 
     const nextPagePosts = await this.props.handler.nextPageHandler(page);
     if(nextPagePosts.length === 0) {
