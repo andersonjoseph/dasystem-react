@@ -138,7 +138,7 @@ class App extends React.Component<IAppProps> {
 
     let posts: any[];
     try {
-      posts = await this.props.handler.getPostsByTagsHandler(tags);
+      posts = await this.props.handler.getPostsByTagsHandler(tags.map(tag => tag.toLowerCase().replace(/ /g, '-')));
     } catch(err) {
       posts = [];
       if(!err.status) {
