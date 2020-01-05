@@ -1,12 +1,11 @@
 import React from 'react';
-import { Tag, Card, Row, Col, Select, Input, Divider } from 'antd';
+import { Tag, Card, Row, Col, Select, Input, Divider, Collapse } from 'antd';
 import { ITopMenuProps, ITopTagsProps } from './types';
 
 const { Search } = Input;
-
 const { Option } = Select;
 const { CheckableTag } = Tag;
-
+const { Panel } = Collapse;
 
 type TopTagsState = {
   selectedTags: string[]
@@ -60,11 +59,14 @@ class TopMenu extends React.Component<ITopMenuProps> {
          />
          </Row>
          <Divider/>
-         <Row type="flex" justify="center" align="top">
+         <Row type="flex" justify="space-around" align="middle">
 
            <Col lg={12} md={12} sm={24}>
-             <h5 style={{ marginRight: 8, display: 'inline' }}>Tags:</h5>
-             <TopTags handlePostsByTags={this.props.handlePostsByTags} tags={this.props.tags} />
+             <Collapse bordered={false}>
+              <Panel key="1" header="Tags" style={{border: 'none'}}>
+                <TopTags handlePostsByTags={this.props.handlePostsByTags} tags={this.props.tags} />
+              </Panel>
+             </Collapse>
            </Col>
 
            <Col lg={12} md={12} sm={24} style={{textAlign: 'right'}}>
