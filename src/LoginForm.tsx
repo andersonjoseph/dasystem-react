@@ -94,18 +94,17 @@ class NormalLoginForm extends React.Component<INormalLoginFormProps> {
     try {
       await this.props.loginHandler(email, password);
     } catch(err) {
-      if(err.response && err.response.status === 401) {
-        this.showError('Invalid credentials');
-      }
-      else {
-        this.showError('Something bad happened');
-      }
-      this.setState({
-        loading: false
-      });
-      return
-    }
+      console.log(err.response);
+      if(err.response.status === 401) {
+        this.showError('Bad credentials. Check your email and password');
 
+        this.setState({
+          loading: false
+        });
+      }
+
+      return;
+    }
 
     this.showSuccess('Logged in succesfully');
     this.setState({

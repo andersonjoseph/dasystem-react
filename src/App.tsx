@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Row, Col, Affix, BackTop, Spin, Card, message } from 'antd';
+import { Layout, Row, Col, BackTop, Spin, Card, message } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import './App.css';
@@ -8,7 +8,6 @@ import 'antd/dist/antd.css';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import PostList from './PostList';
-import AnnouncesBar from './AnnouncesBar';
 import TopMenu from './TopMenu';
 
 import { IAppProps, IPostObject } from './types';
@@ -83,12 +82,13 @@ class App extends React.Component<IAppProps> {
     let user;
     try {
       user = await this.props.handler.loginHandler(email, password);
-      // statements
-    } catch(err) {
-      if(!err.status) {
+    } catch(err)  {
+      if(!err.response.status) {
         this.showError('Network Error');
+        return;
       }
-      return;
+
+      throw err;
     }
 
     window.sessionStorage.setItem('email', user.email);
@@ -99,7 +99,7 @@ class App extends React.Component<IAppProps> {
     try {
       await this.props.handler.signinHandler(email, password);
     } catch(err) {
-      if(!err.status) {
+      if(!err.response.status) {
         this.showError('Network Error');
       }
     }
@@ -109,7 +109,7 @@ class App extends React.Component<IAppProps> {
     try {
       await this.props.handler.submitPostHandler(link);
     } catch(err) {
-      if(!err.status) {
+      if(!err.response.status) {
         this.showError('Network Error');
       }
     }
@@ -122,7 +122,7 @@ class App extends React.Component<IAppProps> {
       posts = await this.props.handler.getPostsFilteredByHandler(filter);
     } catch(err) {
       posts = [];
-      if(!err.status) {
+      if(!err.response.status) {
         this.showError('Network Error');
       }
     }
@@ -141,7 +141,7 @@ class App extends React.Component<IAppProps> {
       posts = await this.props.handler.getPostsByTagsHandler(tags.map(tag => tag.toLowerCase().replace(/ /g, '-')));
     } catch(err) {
       posts = [];
-      if(!err.status) {
+      if(!err.response.status) {
         this.showError('Network Error');
       }
     }
@@ -150,7 +150,7 @@ class App extends React.Component<IAppProps> {
       posts: posts,
       loadingPosts: false
     });
-    
+
   }
 
   async handleLatestPosts() {
@@ -161,7 +161,7 @@ class App extends React.Component<IAppProps> {
       posts = await this.props.handler.getLatestPostsHandler();
     } catch(err) {
       posts = [];
-      if(!err.status) {
+      if(!err.response.status) {
         this.showError('Network Error');
       }
     }
@@ -180,7 +180,7 @@ class App extends React.Component<IAppProps> {
       posts = await this.props.handler.getFavPostsHandler();
     } catch(err) {
       posts = [];
-      if(!err.status) {
+      if(!err.response.status) {
         this.showError('Network Error');
       }
     }
@@ -199,7 +199,7 @@ class App extends React.Component<IAppProps> {
       posts = await this.props.handler.searchPostsHandler(query);
     } catch(err) {
       posts = [];
-      if(!err.status) {
+      if(!err.response.status) {
         this.showError('Network Error');
       }
     }
@@ -242,7 +242,7 @@ class App extends React.Component<IAppProps> {
           <Header />
 
           <Layout>
-            <Sidebar 
+            <Sidebar
               handleLatestPosts = { this.handleLatestPosts }
               handleFavPosts = { this.handleFavPosts }
               handleSubmitPost = { this.handleSubmitPost }
@@ -260,29 +260,23 @@ class App extends React.Component<IAppProps> {
 
                 <Row>
 
-                  <Col lg={16} md={24}>
-                    <TopMenu 
+                  <Col lg={24}>
+                    <TopMenu
                       handleSearchPosts = { this.handleSearchPosts }
-                      handlePostsByTags = { this.handlePostsByTags }  
-                      handleFilterPosts = { this.handleFilterPosts }  
-                      tags = { this.state.tags } 
+                      handlePostsByTags = { this.handlePostsByTags }
+                      handleFilterPosts = { this.handleFilterPosts }
+                      tags = { this.state.tags }
                     />
                     <Spin spinning={this.state.loadingPosts}>
-                      
-                        <PostList 
-                          posts = { this.state.posts } 
-                          favoritePostHandler={this.props.handler.favoritePostHandler} 
-                          unFavoritePostHandler={this.props.handler.unFavoritePostHandler} 
+
+                        <PostList
+                          posts = { this.state.posts }
+                          favoritePostHandler={this.props.handler.favoritePostHandler}
+                          unFavoritePostHandler={this.props.handler.unFavoritePostHandler}
                         />
                         {this.loadingNextPage()}
 
                     </Spin>
-                  </Col>
-
-                  <Col lg={8} md={24} sm={0} xs={0}>
-                    <Affix target={() => window.document.getElementById('content') || window}>
-                      <AnnouncesBar/>
-                    </Affix>
                   </Col>
 
                   <BackTop target={() => window.document.getElementById('content') || window} />

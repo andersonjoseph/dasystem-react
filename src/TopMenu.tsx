@@ -54,7 +54,6 @@ class TopMenu extends React.Component<ITopMenuProps> {
            placeholder="input search text"
            enterButton="Search"
            onSearch={this.props.handleSearchPosts}
-           size="small"
            style={{width: '80%'}}
          />
          </Row>

@@ -9,7 +9,9 @@ class MyHeader extends React.Component<IHeaderProps> {
   render() {
     return(
       <Header>
-        <h1 style={{textAlign: 'center'}}><a className='title' style={{color: 'white'}} href="/">Da System Bar</a></h1>
+        <h1 style={{fontSize: '2em', textAlign: 'center', color: 'white', textShadow: '2px 2px 0px #1890ff', fontWeight: 'bolder'}}>
+          Da System Bar
+        </h1>
       </Header>
     );
   }

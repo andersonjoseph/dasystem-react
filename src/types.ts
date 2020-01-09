@@ -34,6 +34,10 @@ export interface INewPostModalProps {
   onCancelHandler: () => void;
   onOkHandler: (link: string) => void;
 }
+export interface IAboutModalProps {
+  visible: boolean;
+  onCancelHandler: () => void;
+}
 
 export interface IUserModalProps {
   visible: boolean;

@@ -3,6 +3,7 @@ import { Layout, Menu, Icon, message } from 'antd';
 
 import NewPostModal from './NewPostModal';
 import UserModal from './UserModal';
+import AboutModal from './AboutModal';
 
 import { ISidebarProps } from './types';
 
@@ -11,6 +12,7 @@ const {Sider} = Layout;
 type SideBarState = {
   newPostModalVisible: boolean;
   userModalVisible: boolean;
+  aboutModalVisible: boolean;
 }
 
 class Sidebar extends React.Component<ISidebarProps> {
@@ -21,18 +23,21 @@ class Sidebar extends React.Component<ISidebarProps> {
 
     this.state = {
       newPostModalVisible: false,
-      userModalVisible: false
+      userModalVisible: false,
+      aboutModalVisible: false,
     }
 
     this.handleLatestPostsClick = this.handleLatestPostsClick.bind(this);
     this.handleFavoritePostsClick = this.handleFavoritePostsClick.bind(this);
     this.handleUserClick = this.handleUserClick.bind(this);
     this.handleNewPostClick = this.handleNewPostClick.bind(this);
+    this.handleAboutClick = this.handleAboutClick.bind(this);
 
     this.handleCancelPostModal = this.handleCancelPostModal.bind(this);
     this.handleSubmitPostClick = this.handleSubmitPostClick.bind(this);
 
     this.handleCancelUserModal = this.handleCancelUserModal.bind(this);
+    this.handleCancelAboutModal = this.handleCancelAboutModal.bind(this);
   }
 
   showMessage(msg: string) {
@@ -48,6 +53,12 @@ class Sidebar extends React.Component<ISidebarProps> {
   handleCancelPostModal() {
     this.setState({
       newPostModalVisible: false
+    });
+  }
+
+  handleCancelAboutModal() {
+    this.setState({
+      aboutModalVisible: false
     });
   }
 
@@ -74,6 +85,12 @@ class Sidebar extends React.Component<ISidebarProps> {
   handleUserClick() {
     this.setState({
       userModalVisible: true
+    });
+  }
+
+  handleAboutClick() {
+    this.setState({
+      aboutModalVisible: true
     });
   }
 
@@ -109,19 +126,31 @@ class Sidebar extends React.Component<ISidebarProps> {
             <span className="nav-text">New Post</span>
           </Menu.Item>
 
+          <Menu.Divider></Menu.Divider>
+
+          <Menu.Item key="6" onClick={this.handleAboutClick} style={{fontSize: 'large'}}>
+            <Icon type="info" />
+            <span className="nav-text-circle">About</span>
+          </Menu.Item>
+
         </Menu>
 
-        <NewPostModal 
+        <NewPostModal
           visible = { this.state.newPostModalVisible }
           onCancelHandler = { this.handleCancelPostModal }
           onOkHandler = { this.handleSubmitPostClick }
         />
 
-        <UserModal 
+        <UserModal
           visible = { this.state.userModalVisible }
           onCancel = { this.handleCancelUserModal }
           loginHandler = { this.props.loginHandler }
           signinHandler = {this.props.signinHandler}
+        />
+
+        <AboutModal
+          visible = { this.state.aboutModalVisible }
+          onCancelHandler = { this.handleCancelAboutModal }
         />
 
       </Sider>
