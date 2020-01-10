@@ -70,7 +70,7 @@ class AppHandler implements IAppHandler {
     });
 
   }
- 
+
   async getPostsFilteredByHandler(filter: string) {
     this.params.filter = filter;
     delete this.params.orderby;
@@ -102,6 +102,8 @@ class AppHandler implements IAppHandler {
     this.baseURL = `${HOST}/wp-json/api/v1/articles/favorites`;
     delete this.params.page;
     delete this.params.orderby;
+
+    this.params.skip_cache = '1';
     const posts = await this.getPosts();
 
     return posts;
@@ -115,9 +117,6 @@ class AppHandler implements IAppHandler {
     const posts = await this.getPosts();
 
     return posts;
-  }
-
-  async suscribeUserHandler(user: string) {
   }
 
   async submitPostHandler(link: string) {
@@ -155,7 +154,7 @@ class AppHandler implements IAppHandler {
 }
 
 ReactDOM.render(
-  <App 
+  <App
     handler = {new AppHandler()}
   />,
   document.getElementById('root')
