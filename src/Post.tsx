@@ -96,10 +96,10 @@ class Post extends React.Component<IPostProps> {
       )
     }
 
-    const shareText = `${this.props.title} | ${this.props.link} | Via: Engine Curated`;
+    const shareText = `${this.props.title} | ${this.props.link} | Via: Da System Bar`;
     const shareLinks = (
       <div>
-        <a 
+        <a
         className="twitter-share-button"
         target="_blank"
         rel="noopener noreferrer"
@@ -111,8 +111,8 @@ class Post extends React.Component<IPostProps> {
 
         <br />
 
-        <a 
-        href={`https://www.facebook.com/sharer/sharer.php?u=${this.props.link}`} 
+        <a
+        href={`https://www.facebook.com/sharer/sharer.php?u=${this.props.link}`}
         target="_blank"
         rel="noopener noreferrer">
           <Icon type="facebook" theme="filled" />
@@ -146,12 +146,12 @@ class Post extends React.Component<IPostProps> {
         <Divider/>
 
           <div>
-            <a target="_blank" rel="noopener noreferrer" href={this.props.authorLink}>{this.props.authorName}</a> 
+            <a target="_blank" rel="noopener noreferrer" href={this.props.authorLink}>{this.props.authorName}</a>
             <Divider type="vertical" />
             {this.favoriteButton()}
             <Divider type="vertical" />
             {this.shareButton()}
-            
+
           </div>
 
           <br />
@@ -168,7 +168,7 @@ class Post extends React.Component<IPostProps> {
             </Col>
 
           </Row>
-          
+
         </Card>
     );
   }
