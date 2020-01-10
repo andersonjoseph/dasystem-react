@@ -5,7 +5,6 @@ export interface IAppHandler {
   getFavPostsHandler: () => Promise<IPostObject[]>;
   getTagsHandler: () => Promise<string[]>;
   searchPostsHandler: (query: string) => Promise<IPostObject[]>;
-  suscribeUserHandler: (user: string) => Promise<void>;
   submitPostHandler: (link: string) => Promise<void>;
   favoritePostHandler: (post: number) => Promise<void>;
   unFavoritePostHandler: (post: number) => Promise<void>;
